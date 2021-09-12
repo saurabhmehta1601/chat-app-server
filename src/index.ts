@@ -1,0 +1,1 @@
+console.log("Setup typescript, eslint and webpack")
