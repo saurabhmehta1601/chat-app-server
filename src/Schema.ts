@@ -2,13 +2,8 @@ import {gql} from "apollo-server"
 
 const typeDefs = gql`
 
-    type User {
-        username: String!
-        avatar_url: String
-    }
-
     type Message {
-        user: User!
+        author: String!
         content: String!
     }
 
@@ -16,5 +11,8 @@ const typeDefs = gql`
         getMessages:[Message!]! 
     }
 
+    type Mutation {
+        createMessage(author:String!, content:String!): Message!
+    }
 `
 export default typeDefs
