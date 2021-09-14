@@ -8,7 +8,7 @@ const typeDefs = gql`
     }
 
     type Query {
-        getMessages:[Message!]! 
+        allMessages:[Message!]! 
     }
 
     type Mutation {
