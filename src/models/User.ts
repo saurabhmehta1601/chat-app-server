@@ -3,6 +3,7 @@ import {Schema,model} from "mongoose"
 export interface IUser {
     username: string;
     password:string ;
+   refreshTokenVersion: number; 
 }
 
 const UserSchema =  new Schema<IUser>({
@@ -16,6 +17,11 @@ const UserSchema =  new Schema<IUser>({
     password:{
         type:String,
         required:true,
+    },
+    refreshTokenVersion:{
+        type:Number,
+        default:0,
+        required:true 
     }
 },{timestamps: true})
 

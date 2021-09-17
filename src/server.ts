@@ -1,4 +1,6 @@
-import {ApolloServer} from "apollo-server";
+import express from "express"
+import cookieParser from "cookie-parser"
+import {ApolloServer} from "apollo-server-express";
 import Query from "./resolvers/Query";
 import Mutation from "./resolvers/Mutation"
 import typeDefs from "./Schema"
@@ -10,15 +12,23 @@ const server = new ApolloServer({
     typeDefs,
     resolvers: {
         Query, Mutation
-    }
+    },
+    context: ({req,res}) => ({req,res})
 })
 
-connectDb().then(() => {
+const app = express()
+
+app.use(cookieParser())
+
+
+server.applyMiddleware({app})
+
+connectDb()
+.then(() => {
     console.log("🤜  mongoose connected to mongoDB ~~ ")
-    server.listen()
-    .then(({url})   => {
-        console.log(`🚀  Running graphql server on ${url}`)})
-    .catch(() => { console.log("⚠️  Server failed to start !! ")})
+    app.listen({port: 4000} ,() =>{ 
+        console.log(`🚀  Running graphql server on ${server.graphqlPath}`)
+    })
 })
 .catch((err: any )=> {
     console.log("⚠️  mongoose connection failed !! ")
